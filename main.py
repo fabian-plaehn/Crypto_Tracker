@@ -157,12 +157,10 @@ cum_sum_euro["sum"] = cum_sum_euro.sum(axis=1)
 
 
 #print(deposit_euro["sum"])
+deposit_euro["cum_sum"] = deposit_euro["sum"].cumsum()
+#print(deposit_euro["cum_sum"])
 #print(together["realized_profit"])
 #print(cum_sum_euro["sum"])
-
-fig, ax = plt.subplots()
-ax.plot(deposit_euro["sum"])
-#[, together["realized_profit"], cum_sum_euro["sum"]]
 
 today = datetime.date.today()
 tomorrow = today + datetime.timedelta(days=1)
@@ -176,6 +174,7 @@ else:
     
 fig = make_subplots(rows=1, cols=1)
 fig.add_trace(go.Bar(x=deposit_euro["sum"].index, y=deposit_euro["sum"], name="Deposit"), row=1, col=1)
+fig.add_trace(go.Scatter(x=deposit_euro["cum_sum"].index, y=deposit_euro["cum_sum"], mode="lines", name="Cummulated Deposits"), row=1, col=1)
 fig.add_trace(go.Scatter(x=together["realized_profit"].index, y=together["realized_profit"], mode="lines", name="realized Gains"), row=1, col=1)
 fig.add_trace(go.Scatter(x=cum_sum_euro["sum"].index, y=cum_sum_euro["sum"], mode="lines", name="Portfolio"), row=1, col=1)
 st.plotly_chart(fig)
